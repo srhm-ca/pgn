@@ -1,0 +1,238 @@
+*text*:
+[begin text]
+{text}
+[end text]
+
+*task*:
+[begin task]
+In this task, you’ll be identifying the relationship types that exists between pairs of individuals in the above text, using the whole text as provided. (For example, if reading To Kill a Mockingbird, you’d mark that Atticus Finch is the father of Scout Finch.)
+
+After reading the text, answer the following questions for pairs of individuals using these guidelines:
+[end task]
+
+*Target*:
+[begin individuals]
+Only produce a single annotation per individuals pair.
+[end individuals]
+
+*Affinity*:
+[begin affinity]
+How do the two individuals feel toward each other? For example, if they are friendly, select "Positive". If
+it is unclear how they feel toward each other or if they do not have strong opinions about each other, select
+"Neutral". If they are enemies or rivals, or hate each other, select "Negative".
+[end affinity]
+
+*Category*:
+[begin category]
+How are the two individuals related? If they are friends, say "Social". If they share a relationship because
+they work with each other, say "Professional". If they are family, then say "Familial".
+[end category]
+
+*Kind*:
+[begin kind]
+Specifically, how is the First Individuals related to the Second Individual? For example, if the First Individual is the husband of the Second Individual, then select "husband". Please keep the Category and the Kind consistent:
+
+If you say "Social", then the Kind must be one of these:
+• friend
+• enemy
+• acquaintance
+• lovers
+• unrequited love interest (X is in love with Y, but Y is not in love with X)
+• rivals
+
+If you say "Professional", then the Kind must be one of these:
+• employer
+• employee
+• colleague
+• servant
+• master
+• student
+• teacher
+• client
+• person offering service to client (e.g., lawyer)
+
+If you say "Familial", then the Kind must be one of these:
+• husband/wife
+• brother/sister
+• cousin
+• uncle/aunt
+• niece/nephew
+• child
+• parent
+• grandchild
+• grandparent
+• orphan
+• foster parent
+• step-child
+• step-parent
+• in-law relation (e.g., mother-in-law; specify in detail)
+• half relation (e.g., half-sister; specify in detail)
+[end kind]
+
+*Output Format*:
+[begin format]
+Please provide your response with the following JSON schema: 
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "Individual Relationship Schema",
+  "description": "Schema for describing relationships between individuals",
+  "required": [
+    "individual_1",
+    "individual_2",
+    "affinity",
+    "coarse_category",
+    "fine_category"
+  ],
+  "properties": {
+    "individual_1": {
+      "type": "string",
+      "description": "First character in the relationship"
+    },
+    "individual_2": {
+      "type": "string",
+      "description": "Second character in the relationship"
+    },
+    "affinity": {
+      "type": "string",
+      "enum": ["positive", "negative", "neutral"],
+      "description": "The nature of the relationship between characters"
+    },
+    "coarse_category": {
+      "type": "string",
+      "enum": ["professional", "social", "social"],
+      "description": "Broad category of the relationship"
+    },
+    "fine_category": {
+      "type": "string",
+      "description": "Specific type of relationship",
+      "enum": [
+        "friend",
+        "enemy",
+        "acquaintance",
+        "lovers",
+        "unrequited love interest",
+        "rivals",
+        "employer",
+        "employee",
+        "colleague",
+        "servant",
+        "master",
+        "student",
+        "teacher",
+        "client",
+        "person offering service to client",
+        "husband/wife",
+        "brother/sister",
+        "cousin",
+        "uncle/aunt",
+        "niece/nephew",
+        "child",
+        "parent",
+        "grandchild",
+        "grandparent",
+        "orphan",
+        "foster parent",
+        "step-child",
+        "step-parent",
+        "in-law relation",
+        "half relation"
+      ]
+    },
+  },
+  "additionalProperties": false
+}
+[end format]
+
+*Example output for Don Quixote*:
+[begin example]
+[
+  {
+    "individual_1": "Sancho Panza",
+    "individual_2": "Don Quixote",
+    "affinity": "neutral",
+    "coarse_category": "professional",
+    "fine_category": "employer"
+  },
+  {
+    "individual_1": "Rocinante",
+    "individual_2": "Don Quixote",
+    "affinity": "positive",
+    "coarse_category": "professional",
+    "fine_category": "friend"
+  },
+  {
+    "individual_1": "Dulcinea del Toboso",
+    "individual_2": "Don Quixote",
+    "affinity": "neutral",
+    "coarse_category": "social",
+    "fine_category": "unrequited love interest"
+  },
+  {
+    "individual_1": "Cervantes",
+    "individual_2": "Cide Hamete Benengeli",
+    "affinity": "positive",
+    "coarse_category": "professional",
+    "fine_category": "colleague"
+  },
+  {
+    "individual_1": "The Duke and Duchess",
+    "individual_2": "Don Quixote",
+    "affinity": "neutral",
+    "coarse_category": "social",
+    "fine_category": "enemy"
+  },
+  {
+    "individual_1": "The Duke and Duchess",
+    "individual_2": "Sancho Panza",
+    "affinity": "neutral",
+    "coarse_category": "social",
+    "fine_category": "enemy"
+  },
+  {
+    "individual_1": "Don Quixote",
+    "individual_2": "Altisidora",
+    "affinity": "negative",
+    "coarse_category": "social",
+    "fine_category": "lovers"
+  },
+  {
+    "individual_1": "Altisidora",
+    "individual_2": "The Duke and Duchess",
+    "affinity": "neutral",
+    "coarse_category": "professional",
+    "fine_category": "employee"
+  },
+  {
+    "individual_1": "The priest",
+    "individual_2": "Don Quixote",
+    "affinity": "positive",
+    "coarse_category": "social",
+    "fine_category": "friend"
+  },
+  {
+    "individual_1": "Sampson Carrasco",
+    "individual_2": "Don Quixote",
+    "affinity": "negative",
+    "coarse_category": "social",
+    "fine_category": "enemy"
+  },
+  {
+    "individual_1": "Sancho Panza",
+    "individual_2": "Dapple",
+    "affinity": "neutral",
+    "coarse_category": "social",
+    "fine_category": "friend"
+  },
+  {
+    "individual_1": "The barber",
+    "individual_2": "Don Quixote",
+    "affinity": "positive",
+    "coarse_category": "social",
+    "fine_category": "friend"
+  }
+]
+[end example]
+
+Begin the task!
+"""
